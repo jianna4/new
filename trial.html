@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<title>MONKEY_🙉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="sidebar.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="video.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body>
+
+<div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:160px;">
+  <a href="#" class="w3-bar-item w3-button">Explore</a>
+  <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+  following<i class="fa fa-caret-down"></i>
+  </button>
+  <div id="demoAcc" class="w3-hide w3-white w3-card">
+    <a href="#" class="w3-bar-item w3-button">freinds</a>
+    <a href="#" class="w3-bar-item w3-button">Message</a>
+  </div>
+
+  <div class="w3-dropdown-click">
+    <button class="w3-button" onclick="myDropFunc()">
+      profile <i class="fa fa-caret-down"></i>
+    </button>8
+    <div id="demoDrop" class="w3-dropdown-content w3-bar-block w3-white w3-card">
+      <a href="#" class="w3-bar-item w3-button">Link</a>
+      <a href="#" class="w3-bar-item w3-button">Link</a>
+    </div>
+  </div>
+  <a href="#" class="w3-bar-item w3-button">Link 2</a>
+  <a href="#" class="w3-bar-item w3-button">Link 3</a>
+</div>
+
+<div class="w3-container" style="margin-left:160px;">
+    <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+    
+    <div class="video-container" id="video-container">
+      <video src="movie1.mp4" class="video" id="video1" controls></video>
+      <video src="movie2.mp4" class="video" id="video2" controls></video>
+      <video src="movie3.mp4" class="video" id="video3" controls></video>
+
+      <div class="bottom-icons">
+        <i class="fa fa-home"></i>
+        <i class="fa fa-user"></i>
+        <i class="fa fa-upload"></i>
+        <i class="fa fa-users"></i>
+      </div>
+    </div>
+
+    
+</div>
+  
+<script>
+function myAccFunc() {
+  var x = document.getElementById("demoAcc");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+
+function myDropFunc() {
+  var x = document.getElementById("demoDrop");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+const videos = document.querySelectorAll('.video');
+let currentIndex = 0;
+
+const videoContainer = document.getElementById('video-container');
+
+// Helper function to show the current video
+function showVideo(index) {
+  // Make sure the index is within bounds
+  if (index >= 0 && index < videos.length) {
+    videos[currentIndex].pause(); // Pause the current video
+    videos[currentIndex].style.display = 'none'; // Hide current video
+    currentIndex = index; // Update the index
+    videos[currentIndex].style.display = 'block'; // Show the new video
+    videos[currentIndex].play(); // Autoplay the new video
+  }
+}
+
+// Initial setup: show the first video
+videos.forEach((video, index) => {
+  if (index !== 0) video.style.display = 'none'; // Hide all videos except the first one
+});
+
+// Scroll event to detect up or down scrolling
+let isScrolling;
+videoContainer.addEventListener('wheel', (event) => {
+  clearTimeout(isScrolling);
+  
+  isScrolling = setTimeout(() => {
+    if (event.deltaY < 0) {
+      // Scroll up -> previous video
+      if (currentIndex > 0) showVideo(currentIndex - 1);
+    } else if (event.deltaY > 0) {
+      // Scroll down -> next video
+      if (currentIndex < videos.length - 1) showVideo(currentIndex + 1);
+    }
+  }, 50);
+});
+
+// Touch event to pause/play video
+videos.forEach((video) => {
+  video.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
